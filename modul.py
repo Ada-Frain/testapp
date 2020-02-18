@@ -33,4 +33,12 @@ class Task(Abstract, Base):
     def __str__(self):
         return ' | '.join([self.id, self.title, self.status])
     
-    Base.metadata.create_all()
+    # Base.metadata.create_all()
+
+    def add_user(name, email, password):
+        engine = create_engine('sqlite:///app.db', echo=True)
+        session = Session(bind=engine)
+        user = User(username=name,email=email,password=password)
+        session.add(user)
+        session.commit()
+        session.close()

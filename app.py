@@ -2,7 +2,7 @@
 # python -m pip install flask
 # python -m pip install flask --user
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from modul import add_user
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ def index():
         password_check = request.form['password_check']
         add_user(name, email, password)
         # print(request.form['name'])
-        return 'Form was sent'
+        return redirect('/users/' + name)
     return render_template('index.html')
 
 
