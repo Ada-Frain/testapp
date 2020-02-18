@@ -12,7 +12,11 @@ def index():
     # return {'data': ['apple', 'pie']}
     # return '<h1>Test</h1>'
     if request.method == 'POST':
-        print(request.form['name'])
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+        password_check = request.form['password_check']
+        # print(request.form['name'])
         return 'Form was sent'
     return render_template('index.html')
 
