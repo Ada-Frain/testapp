@@ -1,3 +1,21 @@
-<h1>Test</h1>
-<p>Hello, {{ name|title }}!</p>
-<p>hi</p>
+<html lang="en">
+  <head>
+    <title>Flask App</title>
+    <link 
+        rel="stylesheet" 
+        href={{ url_for('static', filename='1.css') }}
+    >
+  </head>
+  <body>
+      {% if name != session['account'] %}
+      <p>Something went wrong, please og to Log In /
+          <a href={{ url_from('index') }}>Sing Up</a>
+      </p>
+      {% else %}
+        <h1>Test</h1>
+        <p>Hello, {{ name|title }}!</p>
+        <p>hi</p>
+        <a href={{ url_from('logout') }}>Log Out</a>
+        {% endif %}
+  </body>
+</html>
