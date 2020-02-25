@@ -2,23 +2,32 @@
 # python -m pip install flask
 # python -m pip install flask --user
 
-from flask import Flask, render_template, request, redirect, url_for
-from modul import add_user
+from flask import Flask, render_template, request, redirect, url_for, session
+from model import add_user
+from sqlalchemy.exc import IntegrityError
+from model import AccountExists
 
 app = Flask(__name__)
+app.secret_key = 'worldwidehandsomwomenQswhy'
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # return 'Test'
-    # return {'data': ['apple', 'pie']}
-    # return '<h1>Test</h1>'
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
         password = request.form['password']
         password_check = request.form['password_check']
-        add_user(name, email, password)
-        # print(request.form['name'])
+        if password_check != password:
+            return render_template('index.html', error='passwords_error')
+        try:
+            add_user(name, email, password)
+        except AccountExists:
+            return render_template('index.html', error="already_exists")
+        session['account'] = name
         return redirect('/users/' + name)
     return render_template('index.html')
 
@@ -33,7 +42,14 @@ def index():
 #     return 'Hello, Milena!'
 
 @app.route('/users/<name>')
-def user_milena(name):
+def user_page(name):
     return render_template('user.html', name=name)
 
-app.run(debug=True)
+@app.route('/logout')
+def logout():
+    # del session['username'] # рискованно
+    session.pop('account', None)
+    return redirect(url_for('index'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
