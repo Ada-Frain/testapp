@@ -9,13 +9,15 @@
   <body>
       {% if name != session['account'] %}
       <p>Something went wrong, please og to Log In /
-          <a href={{ url_from('index') }}>Sing Up</a>
+          <a href={{ url_for('index') }}>Sing Up</a>
       </p>
       {% else %}
-        <h1>Test</h1>
+      <h1>Test</h1>
+      <div class="container">
         <p>Hello, {{ name|title }}!</p>
-        <p>hi</p>
-        <a href={{ url_from('logout') }}>Log Out</a>
+        <p>You're pretty!</p>
+        <a href={{ url_for('logout') }}>Log Out</a>
+      </div>
         {% endif %}
   </body>
 </html>
