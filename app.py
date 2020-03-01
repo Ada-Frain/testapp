@@ -3,16 +3,35 @@
 # python -m pip install flask --user
 
 from flask import Flask, render_template, request, redirect, url_for, session
-from model import add_user
+from model import add_user, check_user, get_user_tasks
 from sqlalchemy.exc import IntegrityError
-from model import AccountExists
+from model import AccountExists, AccountNotFound
 
 app = Flask(__name__)
 app.secret_key = 'worldwidehandsomwomenQswhy'
 
-@app.errorhandler(404)
-def not_found(error):
-    return render_template('404.html'), 404
+# @app.errorhandler(404)
+# def not_found(error):
+#     return render_template('404.html'), 404
+
+@app.route('/users/<name>')
+def user_page(name):
+    user_tasks = get_users_tasks(name)
+    return render_template('user.html', name=name, tasks=user_tasks)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        try:
+            name = check_user(email, password)
+        except AccountNotFound:
+            return render_template('index.html', error=True)
+        session['account'] = name
+        return redirect('/users/' + name)
+    return render_template('login.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -41,9 +60,9 @@ def index():
 # def user_milena():
 #     return 'Hello, Milena!'
 
-@app.route('/users/<name>')
-def user_page(name):
-    return render_template('user.html', name=name)
+# @app.route('/users/<name>')
+# def user_page(name):
+#     return render_template('user.html', name=name)
 
 @app.route('/logout')
 def logout():

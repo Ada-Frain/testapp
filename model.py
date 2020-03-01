@@ -9,7 +9,13 @@ engine = create_engine('sqlite:///app.db', echo=True)
 Base = declarative_base(bind=engine)
 
 class AccountExists(Exception):
-    '''Authentification pair already in db
+    '''
+    Authentification pair already in db
+    '''
+
+class AccountNotFound(Exception):
+    '''
+    Authentification pair not found in db
     '''
 
 class Abstract:
@@ -55,3 +61,34 @@ def add_user(name, email, password):
         raise AccountExists(Exception)
     finally:
         session.close()
+
+
+def check_user(email, password):
+    engine = create_engine('sqlite:///app.db', echo=True)
+    session = Session(bind=engine)
+    user = session.query(User).filter_by(email=email, password=password).first()
+    session.close()
+    if not user:
+        raise AccountNotFound
+    return user.username
+
+def get_user_tasks(name):
+
+    engine = create_engine('sqlite:///app.db', echo=True)
+    session = Session(bind=engine)
+    user = session.query(User).filter_by(username=name).first()
+    user_tasks = user.tasks
+    session.close()
+
+    return user_tasks
+
+
+def create_user_tasks(name, title, details='', deadline=None):
+    engine = create_engine('sqlite:///app.db', echo=True)
+    session = Session(bind=engine)
+    user = session.query(User).filter_by(username=name).first()
+    user_tasks = user.tasks
+    new_task = Task(title=title, details=details, deadline=deadline)
+    user_tasks.append(new_task)
+    session.commit()
+    session.close()

@@ -10,7 +10,7 @@
     <h1>Nothing</h1>
     <div class="container">
       {% if error == 'passwords_error' %}
-      <p>Sorry, your password is terrible. Try again. (您的密码不匹配)</p>
+      <p>Sorry, your passwords don't match. Try again. 对不起，您的密码不匹配。 再试一次。죄송합니다,암호가 일치하지 않습니다. 다시 시도하십시오. パスワードが一致しません。 もう一度。ขอโทษของคุณรหัสผ่านไม่ตรงกัน ลองใหม่อีกครั้ง Paenitet, tua tesserae non par. Experiri iterum. Кешіріңіз, сіздің құпия сөзіңіз болмайды. Қайтадан көріңіз. Aroha mai, tō kupuhipa kore e ōrite. Ngana anō.</p>
       {% elif error == 'already_exists' %}
       <p>Sorry, your account already exists. Try again.</p>
       {% endif %}
@@ -29,6 +29,7 @@
             <br>
             <input type="submit" value="Send!">
         </form>
+        <p>Already have account? <a href='/login'>?</a></p>
     </div>
 </body>
 </html>

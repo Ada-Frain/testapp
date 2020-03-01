@@ -1,0 +1,30 @@
+<html lang="en">
+  <head>
+    <title>Flask App</title>
+    <link 
+        rel="stylesheet" 
+        href={{ url_for('static', filename='1.css') }}
+    >
+  </head>
+<body>
+    <h1>Nothing</h1>
+    <div class="container">
+      {% if error %}
+      <p>Sorry, this account doesn't exist. Try again. or go to the
+          <a href="/">Sing Up.</a>
+      </p>
+      {% endif %}
+        <form method="POST">
+            <label>Email</label>
+            <input type="email" maxlength="20" name="email" required>
+            <br>
+            <label>Password</label>
+            <input type="password" minlength="6" maxlength="20" name="password" required>
+            <br>
+            <input type="checkbox" name="remember">
+            <label>Remember Me</label>
+            <input type="submit" value="Log In">
+        </form>
+    </div>
+</body>
+</html>
