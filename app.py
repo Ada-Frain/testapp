@@ -3,12 +3,12 @@
 # python -m pip install flask --user
 
 from flask import Flask, render_template, request, redirect, url_for, session
-from model import add_user, check_user, get_user_tasks
+from model import add_user, check_user, get_users_tasks, change_user_task, remove_user_task
 from sqlalchemy.exc import IntegrityError
 from model import AccountExists, AccountNotFound
 
 app = Flask(__name__)
-app.secret_key = 'worldwidehandsomwomenQswhy'
+app.secret_key = 'rampapampapampapapapampapa'
 
 # @app.errorhandler(404)
 # def not_found(error):
@@ -50,25 +50,21 @@ def index():
         return redirect('/users/' + name)
     return render_template('index.html')
 
-
-
-# @app.route('/users/daniil')
-# def user_daniil():
-#     return 'Hello, Daniil!'
-
-# @app.route('/users/milena')
-# def user_milena():
-#     return 'Hello, Milena!'
-
-# @app.route('/users/<name>')
-# def user_page(name):
-#     return render_template('user.html', name=name)
-
 @app.route('/logout')
 def logout():
     # del session['username'] # рискованно
     session.pop('account', None)
     return redirect(url_for('index'))
+
+@app.route('/status/<int:id>')
+def change_status(id):
+    change_user_task(session['account'], id)
+    return redirect(url_for('user_page', name=session['account']))
+
+@app.route('/remove/<int:id>')
+def remove_task(id):
+    remove_user_task(session['account'], id)
+    return {"message": "Task was deleted"}, 200
 
 if __name__ == '__main__':
     app.run(debug=True)

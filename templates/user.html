@@ -1,14 +1,14 @@
 <html lang="en">
   <head>
     <title>Flask App</title>
-    <link 
+    <!-- <link 
         rel="stylesheet" 
         href={{ url_for('static', filename='1.css') }}
-    >
+    > -->
   </head>
   <body>
       {% if name != session['account'] %}
-      <p>Something went wrong, please og to Log In /
+      <p>Something went wrong, please og to 
           <a href={{ url_for('index') }}>Sing Up</a>
           <a href={{ url_for('login') }}>Log In</a>
       </p>
@@ -17,13 +17,20 @@
       <div class="container">
         <p>Hello, {{ name|title }}!</p>
         <p>You're pretty! I love you!</p>
+        
         <ol>
         {% for task in tasks %}
-          <li>{{ task.title }}</li>
+        <li id={{ loop.index|string }}>
+          {{ task.title }} {{ task.status }}
+          <a href={{ "/status/" + loop.index|string }}>Change Status</a>
+          <a href="#" onclick=remove_task(event)>Remove</a>
+        </li>
         {% endfor %}
         </ol>
+
         <a href={{ url_for('logout') }}>Log Out</a>
       </div>
+      <script src={{ url_for('static', filename='task.js') }}></script>
       {% endif %}
   </body>
 </html>
