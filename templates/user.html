@@ -1,14 +1,14 @@
 <html lang="en">
   <head>
     <title>Flask App</title>
-    <!-- <link 
+    <link 
         rel="stylesheet" 
         href={{ url_for('static', filename='1.css') }}
-    > -->
+    >
   </head>
   <body>
       {% if name != session['account'] %}
-      <p>Something went wrong, please og to 
+      <p>Something went wrong, please go to 
           <a href={{ url_for('index') }}>Sing Up</a>
           <a href={{ url_for('login') }}>Log In</a>
       </p>

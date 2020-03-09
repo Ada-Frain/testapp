@@ -4,9 +4,11 @@ from sqlalchemy import (Column, Integer, String, Boolean, Text, Date,
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.exc import IntegrityError
+from werkzeug.security import generate_password_hash, check_password_hash
 
 engine = create_engine('sqlite:///app.db', echo=True)
 Base = declarative_base(bind=engine)
+
 
 class AccountExists(Exception):
     '''
@@ -53,27 +55,36 @@ class Task(Abstract, Base):
 def add_user(name, email, password):
     engine = create_engine('sqlite:///app.db', echo=True)
     session = Session(bind=engine)
-    user = User(username=name, email=email, password=password)
+    user = User(username=name, email=email, password=generate_password_hash(password))
     try:
         session.add(user)
         session.commit()
     except IntegrityError:
-        raise AccountExists(Exception)
+        raise AccountExists
     finally:
         session.close()
 
 
 def check_user(email, password):
+    
     engine = create_engine('sqlite:///app.db', echo=True)
     session = Session(bind=engine)
-    user = session.query(User).filter_by(email=email, password=password).first()
+    user = session.query(User).filter_by(email=email).first()
+    password_check = check_password_hash(user.password, password)
+    if user and password_check:
+        session.close()
+        return user.username
+
     session.close()
+
     if not user:
         raise AccountNotFound
+
     return user.username
 
-def get_users_tasks(name):
 
+def get_user_tasks(name):
+    
     engine = create_engine('sqlite:///app.db', echo=True)
     session = Session(bind=engine)
     user = session.query(User).filter_by(username=name).first()
@@ -83,7 +94,7 @@ def get_users_tasks(name):
     return user_tasks
 
 
-def create_user_tasks(name, title, details='', deadline=None):
+def create_user_task(name, title, details='', deadline=None):
     engine = create_engine('sqlite:///app.db', echo=True)
     session = Session(bind=engine)
     user = session.query(User).filter_by(username=name).first()
@@ -92,6 +103,7 @@ def create_user_tasks(name, title, details='', deadline=None):
     user_tasks.append(new_task)
     session.commit()
     session.close()
+
 
 def change_user_task(username, id):
     engine = create_engine('sqlite:///app.db', echo=True)
@@ -103,11 +115,10 @@ def change_user_task(username, id):
     session.commit()
     session.close()
 
-
 def remove_user_task(username, id):
     engine = create_engine('sqlite:///app.db', echo=True)
     session = Session(bind=engine)
     user = session.query(User).filter_by(username=username).first()
-    task_to_remove = user_tasks[id-1]
+    task_to_remove = user.tasks[id-1]
     session.delete(task_to_remove)
     session.commit()
