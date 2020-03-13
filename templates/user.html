@@ -5,6 +5,10 @@
         rel="stylesheet" 
         href={{ url_for('static', filename='style.css') }}
     >
+    <link 
+        rel="stylesheet" 
+        href={{ url_for('static', filename='user.css') }}
+    >
   </head>
   <body>
       {% if name != session['account'] %}
@@ -13,21 +17,24 @@
           <a href={{ url_for('login') }}>Log In</a>
       </p>
       {% else %}
-      <h1>Test</h1>
-      <div class="container">
-        <p>Hello, {{ name|title }}!</p>
+      <h1>Hello, {{ name|title }}!</h1>
+        <div class='main'>
         <p>You're pretty! I love you!</p>
-        
-        <ol>
         {% for task in tasks %}
-        <li id={{ loop.index|string }}>
-          {{ task.title }} {{ task.status }}
+        <div id={{ loop.index|string }} class="card">
+          <div class="card-img">{{ task.status }}</div>
+          <div class="card-header">{{ task.title }}</div>
+          <div class="card-details">{{ task.details }}</div>
+          <div class="card-start-date">Created: {{ task.create_on }}</div>
+          {% if task.deadline %}
+          <div class="card-end-date">Deadline: {{ task.deadline }}</div>
+          {% endif %}
+          <div class="card-ui"></div>
           <a href={{ "/status/" + loop.index|string }}>Change Status</a>
-          <a href="#" onclick=remove_task(event)>Remove</a>
-        </li>
+          <a href="#" onclick=remove_task(event)>Remove</a></br>
+        </div>
         {% endfor %}
-        </ol>
-
+      </div>
         <a href={{ url_for('logout') }}>Log Out</a>
       </div>
       <script src={{ url_for('static', filename='task.js') }}></script>

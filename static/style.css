@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500|Seymour+One&display=swap&subset=cyrillic');
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC:700|Bad+Script&display=swap&subset=cyrillic');
 
-/* font-family: 'Montserrat', sans-serif;
-font-family: 'Seymour One', sans-serif; */
+/* font-family: 'Amatic SC', cursive;
+font-family: 'Bad Script', cursive; */
 body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100vh;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Bad Script', cursive;
   background-image: url('./bg.jpg');
   background-color: #6c9773;
   background-attachment: fixed;
@@ -16,48 +16,46 @@ body {
   }
 
 h1 {
-  font-family: 'Seymour One', sans-serif;
+  font-family: 'Amatic SC', cursive;
   text-align: center;
-  color: rgb(7, 66, 5);
+  color: rgb(48, 35, 41);
 }
 
 form {
-  background-color:rgba(135, 202, 207, 0.459);
-  border: px solid transparent;
-  border-style: dotted;
+  background-color:rgba(78, 43, 69, 0.541);
+  border: none;
   padding: 20px;
-  border-radius: 20px;
-  border-color: rgb(0, 0, 0);
   width: 20%;
   margin: 0 auto;
 }
 
 input {
   width: 100%;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Bad Script', cursive;
   line-height: 20px;
   outline: none;
-  background-color: rgba(183, 224, 192, 0.623);
+  background-color: rgba(177, 148, 168, 0.514);
   border: 0;
-}
+  }
+::-webkit-input-placeholder {color:#000000;}
 
 input[type="submit"] {
-  width: 60%;
+  height: 10%;
+  width: 50%;
   margin: 10px auto;
-  font-size: 1.4rem;
-  /* text-transform: inherit; */
+  font-size: 1rem;
+  color: rgb(0, 0, 0);
   cursor: pointer;
   transition: 1s;
 }
 
 input[type="submit"]:hover {
   transform: scale(1.2);
-  /* filter: drop-shadow(1px 2px rgb(17, 75, 12);); */
 }
 
 a {
   text-align: center;
-  color: rgb(11, 59, 2);
+  color: rgb(0, 0, 0);
   text-decoration: none;
   transition: 1s;
 }

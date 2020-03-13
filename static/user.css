@@ -1,0 +1,23 @@
+div.main {
+    margin: 0 auto;
+    text-align: center;
+}
+
+div.card {
+    border: 1px solid;
+    width: 220px;
+    height: 100px;
+    display: inline-block;
+    
+}
+
+div.card-img {
+    height: 100px;
+    background: url(https://i.picsum.photos/id/1050/6000/4000.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+h2.card-heading {
+    margin-top: 0;
+}

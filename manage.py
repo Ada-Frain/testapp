@@ -2,7 +2,7 @@
 from sqlalchemy import create_engine
 # from sqlalchemy.ext.declarative import declarative_base
 # from sqlalchemy.orm import relationship, Session
-from model import Base, add_user
+from model import Base, add_user, create_user_task
 import json
 from flask.cli import FlaskGroup
 from app import app
@@ -25,13 +25,15 @@ def reset_db():
 def fill_db():
     with open('MOCK_DATA.json') as f:
         mock = json.load(f)
-    print(mock)
     for i in mock:
         add_user(**i)
-        # print(**i, end='\n\n')
-        # add_user(name=i['name'],
-        #         email=i['email'],
-        #         password=i['password'])
+
+@cli.command('fill-tasks')
+def fill_tasks():
+    with open('MOCK_DATAtasks.json') as f:
+        mock = json.load(f)
+    for i in mock:
+        create_user_task(**i)
 
 cli()
 # fill_db()
