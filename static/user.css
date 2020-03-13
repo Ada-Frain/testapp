@@ -8,7 +8,6 @@ div.card {
     width: 220px;
     height: 100px;
     display: inline-block;
-    
 }
 
 div.card-img {
@@ -20,4 +19,33 @@ div.card-img {
 
 h2.card-heading {
     margin-top: 0;
+}
+
+div.card-ui {
+    display: flex;
+    justify-content: space-around;
+}
+
+div.card-ui a {
+    width: 40%;
+    padding: inherit;
+}
+
+a {
+    display: inline;
+}
+
+form {
+    display: none;
+    position: absolute;
+    top: 30vh;
+    left: 40vw;
+}
+
+a#form-toggler {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 30px;
+    background: rebeccapurple;
 }

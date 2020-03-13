@@ -25,7 +25,7 @@
           <div class="card-img">{{ task.status }}</div>
           <div class="card-header">{{ task.title }}</div>
           <div class="card-details">{{ task.details }}</div>
-          <div class="card-start-date">Created: {{ task.create_on }}</div>
+          <div class="card-start-date">Created: {{ task.created_on }}</div>
           {% if task.deadline %}
           <div class="card-end-date">Deadline: {{ task.deadline }}</div>
           {% endif %}
@@ -34,7 +34,21 @@
           <a href="#" onclick=remove_task(event)>Remove</a></br>
         </div>
         {% endfor %}
-      </div>
+        <form method="POST">
+          <label>Title</label>
+          <input minlength="5" maxlength="20" name="title" placeholder="hz" required>
+          <br>
+          <label>Details</label>
+          <input name="details" placeholder="g" required>
+          <br>
+          <label>Deadline</label>
+          <input type="date" name="deadline" placeholder="a" required>
+          <br>
+          <input type="submit" value="Send!">
+      </form>
+
+      <a id="form-toggler">SHOW</a>
+      </div></br>
         <a href={{ url_for('logout') }}>Log Out</a>
       </div>
       <script src={{ url_for('static', filename='task.js') }}></script>
