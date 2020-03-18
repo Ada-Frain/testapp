@@ -76,6 +76,7 @@ def logout():
 def change_status(id):
     change_user_task(session['account'], id)
     return redirect(url_for('user_page', name=session['account']))
+    
 
 @app.route('/remove/<int:id>')
 def remove_task(id):

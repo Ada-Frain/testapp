@@ -10,5 +10,5 @@ function toggalModal(event) {
     el.style.display = 'block'
 }
 
-document.getElementById('form-toggler')
+const a = document.getElementById('form-toggler')
 a.addEventListener('click', toggalModal)

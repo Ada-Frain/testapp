@@ -15,10 +15,12 @@ class AccountExists(Exception):
     Authentification pair already in db
     '''
 
+
 class AccountNotFound(Exception):
     '''
     Authentification pair not found in db
     '''
+
 
 class Abstract:
     id = Column(Integer, primary_key=True)
@@ -83,7 +85,6 @@ def check_user(email, password):
 
 
 def get_user_tasks(name):
-
     engine = create_engine('sqlite:///app.db', echo=True)
     session = Session(bind=engine)
     user = session.query(User).filter_by(username=name).first()
@@ -101,7 +102,7 @@ def create_user_task(author_id, title, details='', deadline=None):
     user = session.query(User).get(author_id)
     user_tasks = user.tasks
     if deadline:
-        deadline == date.fromisoformat(deadline)
+        deadline = date.fromisoformat(deadline)
         new_task = Task(title=title, details=details, deadline=deadline)
     else:
         new_task = Task(title=title, details=details)
@@ -120,6 +121,7 @@ def change_user_task(username, id):
     session.commit()
     session.close()
 
+
 def remove_user_task(username, id):
     engine = create_engine('sqlite:///app.db', echo=True)
     session = Session(bind=engine)
@@ -133,7 +135,7 @@ def remove_user_task(username, id):
 def get_id_by_name(name):
     engine = create_engine('sqlite:///app.db', echo=True)
     session = Session(bind=engine)
-    user = session.query(User).filter_by(username=username).first()
+    user = session.query(User).filter_by(username=name).first()
     session.close()
     try:
         return user.id

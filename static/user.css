@@ -40,6 +40,7 @@ form {
     position: absolute;
     top: 30vh;
     left: 40vw;
+    background-color:rgb(78, 43, 69);
 }
 
 a#form-toggler {
@@ -47,5 +48,6 @@ a#form-toggler {
     bottom: 30px;
     right: 30px;
     padding: 30px;
-    background: rebeccapurple;
+    background: rgba(78, 43, 69, 0.651);
+    cursor: pointer;
 }
